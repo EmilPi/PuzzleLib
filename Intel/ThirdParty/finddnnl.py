@@ -2,7 +2,8 @@ import sys, os, ctypes
 
 
 def findDNNL():
-	versions = ["1.91", "1.2", "1.1"]
+	# for PuzzleLib version 1.0.2 OneDNN versions >=2.7.x aren't supported
+	versions = ["2.6", "2.5", "1.91", "1.2", "1.1"]
 
 	if sys.platform == "linux":
 		libnames = ["libdnnl.so.%s" % v for v in versions]
