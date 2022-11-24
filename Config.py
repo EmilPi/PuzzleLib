@@ -1,5 +1,6 @@
 import sys, multiprocessing, logging
 from enum import Enum
+from os import environ
 
 
 class ConfigError(Exception):
@@ -13,7 +14,21 @@ class Backend(Enum):
 	intel = 3
 
 
-backend = Backend.cuda
+backend_from_env = (environ.get('PUZZLELIB_BACKEND') or '').lower()
+if backend_from_env == '':  # if not set, attempt CUDA
+	backend = Backend.cuda
+elif backend_from_env == 'cuda':
+	backend = Backend.cuda
+elif backend_from_env == 'hip':
+	backend = Backend.hip
+elif backend_from_env == 'cpu':
+	backend = Backend.cpu
+elif backend_from_env == 'intel':
+	backend = Backend.intel
+else:
+	raise ConfigError('Unknown PuzzleLib backend "%s".' % environ.get('PUZZLELIB_BACKEND'))
+
+
 deviceIdx = 0
 
 
