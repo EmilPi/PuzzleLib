@@ -1,5 +1,6 @@
 #pragma once
 #include <stdbool.h>
+#define PY_SSIZE_T_CLEAN
 
 
 #if defined(__clang__)
